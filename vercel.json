@@ -2,42 +2,106 @@
   "buildCommand": "npm run vercel-build",
   "outputDirectory": ".",
   "redirects": [
-    { "source": "/", "destination": "/join", "permanent": false }
+    {
+      "source": "/",
+      "destination": "/join",
+      "permanent": false
+    }
   ],
   "rewrites": [
-    { "source": "/qr", "destination": "/index.html" },
-    { "source": "/join", "destination": "/join.html" },
-    { "source": "/j", "destination": "/join.html" }
+    {
+      "source": "/qr",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/join",
+      "destination": "/join.html"
+    },
+    {
+      "source": "/j",
+      "destination": "/join.html"
+    }
   ],
   "headers": [
     {
-      "source": "/join-url.json",
+      "source": "/",
       "headers": [
-        { "key": "Cache-Control", "value": "no-store" }
+        {
+          "key": "Cache-Control",
+          "value": "no-store, must-revalidate"
+        }
       ]
     },
     {
-      "source": "/site-config.json",
+      "source": "/join",
       "headers": [
-        { "key": "Cache-Control", "value": "no-store" }
+        {
+          "key": "Cache-Control",
+          "value": "no-store, must-revalidate"
+        }
       ]
     },
     {
-      "source": "/styles.css",
+      "source": "/j",
       "headers": [
-        { "key": "Cache-Control", "value": "no-store, must-revalidate" }
+        {
+          "key": "Cache-Control",
+          "value": "no-store, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/qr",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, must-revalidate"
+        }
       ]
     },
     {
       "source": "/join.html",
       "headers": [
-        { "key": "Cache-Control", "value": "no-store, must-revalidate" }
+        {
+          "key": "Cache-Control",
+          "value": "no-store, must-revalidate"
+        }
       ]
     },
     {
       "source": "/index.html",
       "headers": [
-        { "key": "Cache-Control", "value": "no-store, must-revalidate" }
+        {
+          "key": "Cache-Control",
+          "value": "no-store, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/join-url.json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/site-config.json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    },
+    {
+      "source": "/styles.css",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, must-revalidate"
+        }
       ]
     }
   ]
