@@ -1,0 +1,106 @@
+name: Supabase keep-alive
+
+# Supabase pauses Free Plan projects after 7 days with no API activity.
+# A paused project means orbitwaitlist.au/join stops accepting signups.
+# This runs a real query against the waitlist table every day, so the
+# project never gets close to that 7-day window.
+#
+# Run it by hand any time from the Actions tab ("Run workflow").
+
+on:
+  schedule:
+    # 19:00 UTC daily = 5am AEST / 6am AEDT. GitHub may delay a scheduled
+    # run under load, which is why this is daily and not every 5 days.
+    - cron: "0 19 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: supabase-keepalive
+  cancel-in-progress: false
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Read Supabase config
+        id: cfg
+        run: |
+          set -euo pipefail
+          url=$(jq -r '.supabase.url' site-config.json)
+          key=$(jq -r '.supabase.anonKey' site-config.json)
+          if [ -z "$url" ] || [ "$url" = "null" ] || [ -z "$key" ] || [ "$key" = "null" ]; then
+            echo "::error::site-config.json is missing supabase.url or supabase.anonKey"
+            exit 1
+          fi
+          echo "::add-mask::$key"
+          echo "url=${url%/}" >> "$GITHUB_OUTPUT"
+          echo "key=$key"     >> "$GITHUB_OUTPUT"
+
+      - name: Query the waitlist table
+        env:
+          URL: ${{ steps.cfg.outputs.url }}
+          KEY: ${{ steps.cfg.outputs.key }}
+        run: |
+          set -uo pipefail
+          # Supabase docs: "Typically a few user requests to the database each
+          # day over the previous week is enough to keep the project from being
+          # paused." So send a small burst, not a single request.
+          #
+          # A select against the table is a genuine Postgres query, not just a
+          # gateway hit. The anon SELECT policy is `false`, so this returns an
+          # empty array — that is fine, the query still ran, and running is what
+          # counts as activity.
+          ok=0
+          for i in 1 2 3; do
+            rm -f /tmp/body
+            code=$(curl -sS --max-time 30 -o /tmp/body -w '%{http_code}' \
+              -H "apikey: $KEY" \
+              -H "Authorization: Bearer $KEY" \
+              "$URL/rest/v1/orbit_waitlist?select=id&limit=1")
+            code=${code:-000}
+            if [ "$code" -ge 200 ] && [ "$code" -lt 300 ]; then
+              echo "Query $i: HTTP $code"
+              ok=$((ok + 1))
+            else
+              echo "Query $i failed (HTTP $code):"
+              cat /tmp/body 2>/dev/null || true
+            fi
+            [ "$i" -lt 3 ] && sleep 5
+          done
+
+          if [ "$ok" -eq 0 ]; then
+            echo "::error::No successful queries. The project may be paused \
+          already — open the Supabase dashboard and click Resume project."
+            exit 1
+          fi
+          echo "$ok/3 queries succeeded — project is awake."
+
+      - name: Refresh repo heartbeat
+        run: |
+          set -euo pipefail
+          # GitHub disables scheduled workflows on PUBLIC repos after 60 days
+          # with no repository activity — which would silently kill this very
+          # workflow. Commit a heartbeat every 21 days to keep the schedule
+          # alive. [skip ci] stops Vercel redeploying for a timestamp change.
+          file=.github/keepalive-heartbeat.txt
+          now=$(date -u +%s)
+          last=0
+          if [ -f "$file" ]; then
+            last=$(date -u -d "$(head -n1 "$file")" +%s 2>/dev/null || echo 0)
+          fi
+          age=$(( (now - last) / 86400 ))
+          if [ "$age" -lt 21 ]; then
+            echo "Heartbeat is ${age} day(s) old — no commit needed."
+            exit 0
+          fi
+          date -u +"%Y-%m-%dT%H:%M:%SZ" > "$file"
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "$file"
+          git commit -m "chore: keep-alive heartbeat [skip ci]"
+          git push

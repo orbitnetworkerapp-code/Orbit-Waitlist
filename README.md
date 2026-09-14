@@ -64,6 +64,30 @@ git push -u origin master
 
 Then connect the GitHub repo to Vercel for automatic deployments on push.
 
+## Keeping Supabase awake
+
+Supabase pauses Free Plan projects with low activity over a 7-day period, and a
+paused project means the signup form stops working. Their docs: *"Typically a
+few user requests to the database each day over the previous week is enough to
+keep the project from being paused."*
+
+`.github/workflows/supabase-keepalive.yml` runs daily (19:00 UTC / 5am AEST) and
+sends a small burst of real queries to the `orbit_waitlist` table. It reads the
+project URL and anon key straight from `site-config.json`, so there is nothing
+to configure and no secrets to manage.
+
+- **Run it manually:** Actions tab → *Supabase keep-alive* → *Run workflow*
+- **If it fails**, GitHub emails the repo owner — that is the early warning that
+  the project needs attention. A paused project is resumed from the Supabase
+  dashboard (data is preserved; there is a 90-day window to restore).
+- It writes nothing to the database, so the waitlist table stays clean.
+- Every 21 days it commits a timestamp to `.github/keepalive-heartbeat.txt`.
+  That is deliberate: GitHub disables scheduled workflows on public repos after
+  60 days of no repository activity, which would silently kill this workflow.
+  The commit is tagged `[skip ci]` so it does not trigger a Vercel redeploy.
+
+The only permanent fix is the Supabase Pro plan — paid projects are never paused.
+
 ## Viewing waitlist entries
 
 Log in to [supabase.com](https://supabase.com) → Table Editor → `orbit_waitlist`.
