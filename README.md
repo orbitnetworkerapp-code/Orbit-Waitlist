@@ -1,13 +1,15 @@
 # Orbit Waitlist
 
-Static web app for the Orbit pre-launch waitlist. Collects name + email via a clean form and stores entries in Supabase. Shows a QR code for use at events.
+Static web app for the Orbit pre-launch waitlist. A single-screen form collects name + email and stores entries in Supabase. Shows a QR code for use at events.
+
+The product story (problem, features) lives on orbitnetworker.com — `/join` is purely the signup step, so anyone arriving from the site lands straight on the form.
 
 ## Pages
 
 | Route | File | Purpose |
 |-------|------|---------|
 | `/qr` | `index.html` | QR code — show at events for people to scan |
-| `/join` | `join.html` | Waitlist signup form (root `/` redirects here) |
+| `/join` | `join.html` | Waitlist signup form — name + email only (root `/` redirects here) |
 
 ## Stack
 

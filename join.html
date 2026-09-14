@@ -29,7 +29,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/styles.css?v=14" />
+    <link rel="stylesheet" href="/styles.css?v=15" />
   </head>
   <body>
     <div class="ambient-bg" aria-hidden="true">
@@ -39,173 +39,10 @@
       <span class="ambient-blob ambient-blob--cyan"></span>
     </div>
 
-    <button class="btn-back" id="btn-back" aria-label="Go back">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
-    </button>
-
     <div class="step-shell" id="step-shell">
 
-      <!-- STEP 0: INTRO -->
-      <div class="step intro-step is-active" id="step-0" role="main">
-
-        <div class="intro-hero-cluster">
-          <h1 class="intro-wordmark">ORBIT</h1>
-          <div class="orbital-wrap orbital-wrap--lg" aria-hidden="true">
-            <div class="orbital-ring ring-outer"></div>
-            <div class="orbital-ring ring-mid"></div>
-            <div class="orbital-ring ring-inner"></div>
-            <div class="dot-orbit dot-orbit--outer">
-              <div class="orbital-dot dot-outer"></div>
-            </div>
-            <div class="dot-orbit dot-orbit--mid">
-              <div class="orbital-dot dot-mid"></div>
-            </div>
-            <div class="dot-orbit dot-orbit--inner">
-              <div class="orbital-dot dot-inner"></div>
-            </div>
-            <div class="orbital-center orbital-center--logo">
-              <img src="/assets/logo-mark.png" alt="" width="96" height="96" decoding="async" class="orbit-mark--light" />
-            </div>
-          </div>
-        </div>
-
-        <div class="intro-copy-block">
-          <p class="intro-headline">Turn every conversation into momentum.</p>
-          <p class="intro-sub">Built for people whose business runs on relationships. Capture who you meet, remember the conversation, and follow up at the right time.</p>
-          <button class="btn-enter" id="btn-enter" aria-label="See how Orbit works">
-            See how it works
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </button>
-        </div>
-
-        <div class="intro-trust-bar">
-          <p class="intro-trust">Coming soon · iOS</p>
-        </div>
-
-      </div>
-
-      <!-- STEP 1: THE PROBLEM -->
-      <div class="step slide-step problem-slide" id="step-1" aria-label="The problem Orbit solves">
-        <div class="slide-content">
-
-          <p class="slide-kicker">After every conversation</p>
-
-          <div class="problem-statement">
-            <p class="problem-line problem-line--a">The card goes in your pocket.</p>
-            <p class="problem-line problem-line--b">By tomorrow, the details fade and life takes over.</p>
-          </div>
-
-          <div class="problem-beats-col">
-            <p class="problem-beats-header">Sound familiar?</p>
-
-            <div class="problem-beats">
-            <div class="problem-beat problem-beat--1">
-              <span class="problem-beat__label">01 · Cards</span>
-              <p class="problem-beat__text">You mean to follow up. The card sits in your pocket, then disappears before you write anything down.</p>
-            </div>
-
-            <div class="problem-beat problem-beat--2">
-              <span class="problem-beat__label">02 · Memory</span>
-              <p class="problem-beat__text">Monday arrives and you cannot recall their role, company, or what you actually talked about.</p>
-            </div>
-
-            <div class="problem-beat problem-beat--3">
-              <span class="problem-beat__label">03 · Scattered</span>
-              <p class="problem-beat__text">Names end up across notes, photos, and messages. Nothing ties them to the event or your next step.</p>
-            </div>
-
-            <div class="problem-beat problem-beat--4">
-              <span class="problem-beat__label">04 · Follow-through</span>
-              <p class="problem-beat__text">You are running a business. Without a system, Friday's contacts never get a Monday follow-up.</p>
-            </div>
-
-            <div class="problem-beat problem-beat--5">
-              <span class="problem-beat__label">05 · Your voice</span>
-              <p class="problem-beat__text">Generic templates do not sound like you. When you finally sit down to write, the personal detail is already gone.</p>
-            </div>
-            </div>
-
-          </div>
-
-          <div class="slide-nav">
-            <div class="progress-dots" aria-label="Slide 1 of 2"></div>
-            <button class="btn-continue" data-next="2">
-              The solution
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-            </button>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- STEP 2: THE SOLUTION -->
-      <div class="step slide-step solution-slide" id="step-2" aria-label="How Orbit solves it">
-        <div class="slide-content">
-
-          <p class="slide-kicker">ORBIT</p>
-          <h2 class="slide-heading">Everything in one place.</h2>
-
-          <p class="slide-intro">Scan a card, capture a voice note, and let your agent handle the rest. One calm surface for every contact, every event, every follow-up.</p>
-
-          <div class="orbit-steps">
-
-            <div class="orbit-step">
-              <span class="orbit-step__num">01</span>
-              <div class="orbit-step__body">
-                <strong>Scan the card. Skip the typing.</strong>
-                <span>Point your camera at a business card or event badge. Orbit reads the photo and fills name, title, company, and how to reach them. You check it, then save.</span>
-              </div>
-            </div>
-
-            <div class="orbit-step">
-              <span class="orbit-step__num">02</span>
-              <div class="orbit-step__body">
-                <strong>Capture the conversation</strong>
-                <span>Step away and record a quick voice note. Orbit pulls out who they are, where you met, and what you talked about while it is still fresh. Already scanned their card? Add the note straight onto their profile.</span>
-              </div>
-            </div>
-
-            <div class="orbit-step">
-              <span class="orbit-step__num">03</span>
-              <div class="orbit-step__body">
-                <strong>Your own agent</strong>
-                <span>Ask who you met and what you said. Draft follow-ups in your voice for email, LinkedIn, and SMS. It already knows your notes, scans, and voice captures. It writes like you, not a template.</span>
-              </div>
-            </div>
-
-            <div class="orbit-step">
-              <span class="orbit-step__num">04</span>
-              <div class="orbit-step__body">
-                <strong>Every event, one pipeline</strong>
-                <span>Orbit organises everyone by event. Set a follow-up goal, see who still needs a reply, and track reply rate over time. Reminders keep you on schedule. When someone gets back to you, Orbit celebrates the win.</span>
-              </div>
-            </div>
-
-            <div class="orbit-step">
-              <span class="orbit-step__num">05</span>
-              <div class="orbit-step__body">
-                <strong>Your card, always ready</strong>
-                <span>Your Digital Card lives at your link and in Apple Wallet. Pin your QR to the Lock Screen or Home Screen. They scan once and your full profile opens on their phone. Long after the event, your details are still there.</span>
-              </div>
-            </div>
-
-          </div>
-
-          <p class="solution-closer">One app. Every connection. Nothing lost.</p>
-
-          <div class="solution-cta-bar">
-            <div class="progress-dots" aria-label="Slide 2 of 2"></div>
-            <button class="btn-continue btn-continue--cta" data-next="3">
-              Get early access
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-            </button>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- STEP 3: FORM -->
-      <div class="step form-step" id="step-3" aria-label="Waitlist signup form">
+      <!-- WAITLIST FORM -->
+      <div class="step form-step is-active" id="step-form" role="main" aria-label="Waitlist signup form">
         <div class="form-page">
 
           <div class="orbit-logo">
@@ -252,8 +89,8 @@
         </div>
       </div>
 
-      <!-- STEP 4: SUCCESS -->
-      <div class="step success-step" id="step-4" role="status" aria-live="polite" aria-label="Successfully joined waitlist">
+      <!-- SUCCESS -->
+      <div class="step success-step" id="step-success" role="status" aria-live="polite" aria-label="Successfully joined waitlist">
         <div class="success-stack">
           <div class="success-check" aria-hidden="true">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" width="72" height="72">
