@@ -9,9 +9,11 @@ name: Supabase keep-alive
 
 on:
   schedule:
-    # 19:00 UTC daily = 5am AEST / 6am AEDT. GitHub may delay a scheduled
-    # run under load, which is why this is daily and not every 5 days.
-    - cron: "0 19 * * *"
+    # Twice a day, so a run GitHub drops or delays costs nothing — the day is
+    # still covered. Both times deliberately avoid :00, which is the most
+    # congested slot on GitHub's scheduler and the most likely to be delayed.
+    - cron: "37 19 * * *"   # 05:37 AEST / 06:37 AEDT
+    - cron: "13 7 * * *"    # 17:13 AEST / 18:13 AEDT
   workflow_dispatch:
 
 permissions:

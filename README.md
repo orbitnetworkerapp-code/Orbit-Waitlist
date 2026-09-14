@@ -71,10 +71,14 @@ paused project means the signup form stops working. Their docs: *"Typically a
 few user requests to the database each day over the previous week is enough to
 keep the project from being paused."*
 
-`.github/workflows/supabase-keepalive.yml` runs daily (19:00 UTC / 5am AEST) and
-sends a small burst of real queries to the `orbit_waitlist` table. It reads the
-project URL and anon key straight from `site-config.json`, so there is nothing
-to configure and no secrets to manage.
+`.github/workflows/supabase-keepalive.yml` runs twice a day (19:37 and 07:13
+UTC — 5:37am and 5:13pm AEST) and sends a small burst of real queries to the
+`orbit_waitlist` table. It reads the project URL and anon key straight from
+`site-config.json`, so there is nothing to configure and no secrets to manage.
+
+Two runs a day, both off the top of the hour: GitHub's scheduler delays or drops
+runs under load, and `:00` is its most congested slot. Running twice means a
+missed run costs nothing, since the day is still covered.
 
 - **Run it manually:** Actions tab → *Supabase keep-alive* → *Run workflow*
 - **If it fails**, GitHub emails the repo owner — that is the early warning that
